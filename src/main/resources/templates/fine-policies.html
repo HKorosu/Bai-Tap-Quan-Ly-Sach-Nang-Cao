@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Chính sách phí phạt | Thư viện</title><link rel="stylesheet" th:href="@{/style.css}"></head>
+<body><header th:replace="~{fragments :: nav}"></header><div th:replace="~{fragments :: messages}"></div>
+<main class="container"><h1>Chính sách phí phạt</h1>
+    <section class="card"><h2>Thêm chính sách và kích hoạt</h2><p class="muted">Chính sách mới sẽ thay thế chính sách đang áp dụng; chính sách cũ vẫn được lưu lại để tra cứu.</p>
+        <form th:action="@{/fine-policies}" th:object="${policyForm}" method="post">
+            <div class="form-grid policy-grid">
+                <div><label for="dailyFineAmount">Phí mỗi cuốn mỗi ngày</label><input id="dailyFineAmount" type="number" min="0" step="0.01" th:field="*{dailyFineAmount}"><div class="field-error" th:errors="*{dailyFineAmount}"></div></div>
+                <div><label for="maxFineAmount">Mức trần mỗi dòng <span class="muted">(để trống nếu không giới hạn)</span></label><input id="maxFineAmount" type="number" min="0" step="0.01" th:field="*{maxFineAmount}"><div class="field-error" th:errors="*{maxFineAmount}"></div></div>
+                <div><label for="graceDays">Số ngày miễn phí</label><input id="graceDays" type="number" min="0" th:field="*{graceDays}"><div class="field-error" th:errors="*{graceDays}"></div></div>
+            </div><p><button class="btn" type="submit">Lưu và kích hoạt</button></p>
+        </form>
+    </section>
+    <div class="table-wrap"><table><thead><tr><th>Trạng thái</th><th>Phí/ngày</th><th>Mức trần</th><th>Ngày miễn phí</th></tr></thead>
+        <tbody><tr th:each="policy : ${policies}"><td th:text="${policy.active ? 'Đang áp dụng' : 'Đã lưu'}"></td><td th:text="${policy.dailyFineAmount}"></td><td th:text="${policy.maxFineAmount ?: 'Không giới hạn'}"></td><td th:text="${policy.graceDays}"></td></tr>
+        <tr th:if="${#lists.isEmpty(policies)}"><td colspan="4" class="muted">Chưa có chính sách nào.</td></tr></tbody></table></div>
+</main></body>
+</html>

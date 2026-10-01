@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Thêm sách | Thư viện</title><link rel="stylesheet" th:href="@{/style.css}"></head>
+<body><header th:replace="~{fragments :: nav}"></header>
+<main class="container"><h1>Thêm sách</h1>
+    <form class="card" th:action="@{/books}" th:object="${bookForm}" method="post">
+        <div class="form-grid">
+            <div><label for="title">Tên sách</label><input id="title" th:field="*{title}"><div class="field-error" th:errors="*{title}"></div></div>
+            <div><label for="author">Tác giả</label><input id="author" th:field="*{author}"><div class="field-error" th:errors="*{author}"></div></div>
+            <div><label for="isbn">Mã ISBN</label><input id="isbn" th:field="*{isbn}"><div class="field-error" th:errors="*{isbn}"></div></div>
+            <div><label for="categoryId">Thể loại</label><select id="categoryId" th:field="*{categoryId}"><option value="">-- Chọn thể loại --</option><option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option></select><div class="field-error" th:errors="*{categoryId}"></div></div>
+            <div><label for="availableQuantity">Số lượng có sẵn</label><input id="availableQuantity" type="number" min="0" th:field="*{availableQuantity}"><div class="field-error" th:errors="*{availableQuantity}"></div></div>
+        </div>
+        <p class="actions"><button class="btn" type="submit">Lưu sách</button><a class="btn light" th:href="@{/books}">Quay lại</a></p>
+    </form>
+</main></body>
+</html>

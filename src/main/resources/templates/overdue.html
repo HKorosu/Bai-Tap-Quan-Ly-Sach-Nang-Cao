@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Báo cáo quá hạn | Thư viện</title><link rel="stylesheet" th:href="@{/style.css}"></head>
+<body><header th:replace="~{fragments :: nav}"></header>
+<main class="container"><h1>Báo cáo quá hạn</h1><p class="muted">Phí dự kiến gồm phí đã phát sinh và phí ước tính cho số sách chưa trả theo chính sách hiện tại.</p>
+    <div class="table-wrap"><table><thead><tr><th>Phiếu</th><th>Độc giả</th><th>Hạn trả</th><th>Số ngày trễ</th><th>Sách còn mượn</th><th>Phí dự kiến</th><th>Chi tiết</th></tr></thead>
+        <tbody><tr th:each="row : ${borrowings}">
+            <td th:text="${'#' + row.borrowing.id}"></td><td th:text="${row.borrowing.member.fullName}"></td><td th:text="${row.borrowing.dueDate}"></td>
+            <td th:text="${row.lateDays}"></td><td th:text="${row.remainingQuantity}"></td><td th:text="${row.estimatedFine}"></td>
+            <td><a th:href="@{/borrowings/{id}(id=${row.borrowing.id})}">Mở phiếu</a></td>
+        </tr><tr th:if="${#lists.isEmpty(borrowings)}"><td colspan="7" class="muted">Hiện không có phiếu quá hạn.</td></tr></tbody></table></div>
+</main></body>
+</html>

@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Thêm độc giả | Thư viện</title><link rel="stylesheet" th:href="@{/style.css}"></head>
+<body><header th:replace="~{fragments :: nav}"></header>
+<main class="container"><h1>Thêm độc giả</h1>
+    <form class="card" th:action="@{/members}" th:object="${memberForm}" method="post">
+        <label for="fullName">Họ và tên</label><input id="fullName" th:field="*{fullName}"><div class="field-error" th:errors="*{fullName}"></div>
+        <label for="email">Email</label><input id="email" type="email" th:field="*{email}"><div class="field-error" th:errors="*{email}"></div>
+        <label for="phone">Điện thoại</label><input id="phone" th:field="*{phone}"><div class="field-error" th:errors="*{phone}"></div>
+        <p class="actions"><button class="btn" type="submit">Lưu độc giả</button><a class="btn light" th:href="@{/members}">Quay lại</a></p>
+    </form>
+</main></body>
+</html>

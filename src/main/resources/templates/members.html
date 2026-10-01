@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Độc giả | Thư viện</title><link rel="stylesheet" th:href="@{/style.css}"></head>
+<body><header th:replace="~{fragments :: nav}"></header><div th:replace="~{fragments :: messages}"></div>
+<main class="container"><div class="toolbar"><h1>Độc giả</h1><a class="btn" th:href="@{/members/new}">+ Thêm độc giả</a></div>
+    <div class="table-wrap"><table><thead><tr><th>Họ tên</th><th>Email</th><th>Điện thoại</th></tr></thead>
+        <tbody><tr th:each="member : ${members}"><td th:text="${member.fullName}"></td><td th:text="${member.email}"></td><td th:text="${member.phone}"></td></tr>
+        <tr th:if="${#lists.isEmpty(members)}"><td colspan="3" class="muted">Chưa có độc giả.</td></tr></tbody></table></div>
+</main></body>
+</html>

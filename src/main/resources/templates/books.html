@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sách | Thư viện</title><link rel="stylesheet" th:href="@{/style.css}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header><div th:replace="~{fragments :: messages}"></div>
+<main class="container">
+    <div class="toolbar"><div><h1>Danh sách sách</h1><div class="muted">Tra cứu sách và số lượng hiện có trong thư viện.</div></div><a class="btn" th:href="@{/books/new}">+ Thêm sách</a></div>
+    <form class="toolbar" method="get" th:action="@{/books}">
+        <input style="max-width:420px" type="search" name="q" placeholder="Tìm theo tên, tác giả hoặc ISBN" th:value="${q}">
+        <button class="btn secondary" type="submit">Tìm kiếm</button>
+    </form>
+    <div class="table-wrap"><table><thead><tr><th>Tên sách</th><th>Tác giả</th><th>ISBN</th><th>Thể loại</th><th>Có thể mượn</th></tr></thead>
+        <tbody><tr th:each="book : ${books}"><td th:text="${book.title}"></td><td th:text="${book.author}"></td><td th:text="${book.isbn}"></td><td th:text="${book.category.name}"></td><td th:text="${book.availableQuantity}"></td></tr>
+        <tr th:if="${#lists.isEmpty(books)}"><td colspan="5" class="muted">Chưa có sách phù hợp.</td></tr></tbody>
+    </table></div>
+    <div class="toolbar" th:if="${pageCount > 1}">
+        <a class="btn light" th:if="${page > 0}" th:href="@{/books(page=${page - 1},q=${q})}">Trang trước</a>
+        <span th:text="${'Trang ' + (page + 1) + ' / ' + pageCount}"></span>
+        <a class="btn light" th:if="${page + 1 < pageCount}" th:href="@{/books(page=${page + 1},q=${q})}">Trang sau</a>
+    </div>
+</main>
+</body>
+</html>

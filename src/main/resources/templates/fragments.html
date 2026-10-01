@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<header th:fragment="nav" class="topbar">
+    <div class="container nav">
+        <a class="brand" th:href="@{/books}">Thư viện</a>
+        <nav>
+            <a th:href="@{/books}">Sách</a>
+            <a th:href="@{/members}">Độc giả</a>
+            <a th:href="@{/borrowings}">Phiếu mượn</a>
+            <a th:href="@{/reports/overdue}">Quá hạn</a>
+            <a th:href="@{/fine-policies}">Chính sách phí</a>
+        </nav>
+    </div>
+</header>
+<div th:fragment="messages" class="container">
+    <div class="alert success" th:if="${success}" th:text="${success}"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Trả sách | Thư viện</title><link rel="stylesheet" th:href="@{/style.css}"></head>
+<body><header th:replace="~{fragments :: nav}"></header>
+<main class="container"><h1>Trả sách — phiếu <span th:text="${'#' + borrowing.id}"></span></h1>
+    <section class="card"><p>Hạn trả: <strong th:text="${borrowing.dueDate}"></strong>. Nhập số lượng trả cho từng sách. Mức phạt hiện tại: <strong th:text="${policy.dailyFineAmount}"></strong> / cuốn / ngày.</p>
+        <form th:action="@{/borrowings/{id}/return(id=${borrowing.id})}" th:object="${returnForm}" method="post">
+            <div th:each="line, stat : *{lines}" class="form-grid return-line"
+                 th:attr="data-charged=${line.fineAlreadyCharged},data-max=${policy.maxFineAmount}">
+                <input type="hidden" th:field="*{lines[__${stat.index}__].detailId}">
+                <input type="hidden" th:field="*{lines[__${stat.index}__].title}">
+                <input type="hidden" th:field="*{lines[__${stat.index}__].remainingQuantity}">
+                <input type="hidden" th:field="*{lines[__${stat.index}__].fineAlreadyCharged}">
+                <div><label th:text="${line.title}"></label><div class="muted" th:text="${'Đang mượn ' + line.remainingQuantity + ' cuốn'}"></div></div>
+                <div><label th:for="${'return-' + stat.index}">Số cuốn trả</label>
+                    <input class="return-quantity" th:id="${'return-' + stat.index}" type="number" min="0" th:attr="max=${line.remainingQuantity}" th:field="*{lines[__${stat.index}__].quantityToReturn}"></div>
+                <div><label>Phí dự kiến dòng này</label><div class="line-estimate money">0</div></div>
+            </div>
+            <div class="card"><strong>Tổng phí dự kiến: <span id="total-estimate">0</span></strong><div class="muted">Phí chính thức được tính trên máy chủ khi xác nhận trả. Trả đúng hạn không bị tính phí.</div></div>
+            <p class="actions"><button class="btn" type="submit">Xác nhận trả sách</button><a class="btn light" th:href="@{/borrowings/{id}(id=${borrowing.id})}">Quay lại</a></p>
+        </form>
+    </section>
+</main>
+<script th:inline="javascript">
+    const dueDate = new Date(/*[[${borrowing.dueDate}]]*/ '2026-01-01T00:00:00');
+    const today = new Date(/*[[${today}]]*/ '2026-01-01T00:00:00');
+    const dailyFine = Number(/*[[${policy.dailyFineAmount}]]*/ 0);
+    const graceDays = Number(/*[[${policy.graceDays}]]*/ 0);
+    const lateDays = Math.max(0, Math.floor((today - dueDate) / 86400000) - graceDays);
+    function updatePreview() {
+        let total = 0;
+        document.querySelectorAll('.return-line').forEach(row => {
+            const quantity = Number(row.querySelector('.return-quantity').value || 0);
+            const charged = Number(row.dataset.charged || 0);
+            const maximum = row.dataset.max ? Number(row.dataset.max) : Infinity;
+            const amount = Math.max(0, Math.min(lateDays * quantity * dailyFine, maximum - charged));
+            row.querySelector('.line-estimate').textContent = amount.toFixed(2);
+            total += amount;
+        });
+        document.getElementById('total-estimate').textContent = total.toFixed(2);
+    }
+    document.querySelectorAll('.return-quantity').forEach(input => input.addEventListener('input', updatePreview));
+    updatePreview();
+</script>
+</body>
+</html>

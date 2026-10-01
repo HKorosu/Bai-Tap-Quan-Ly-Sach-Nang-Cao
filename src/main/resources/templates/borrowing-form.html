@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tạo phiếu mượn | Thư viện</title><link rel="stylesheet" th:href="@{/style.css}"></head>
+<body><header th:replace="~{fragments :: nav}"></header>
+<main class="container"><h1>Tạo phiếu mượn</h1>
+    <form class="card" th:action="@{/borrowings}" th:object="${borrowingForm}" method="post">
+        <div class="form-grid">
+            <div><label for="memberId">Độc giả</label><select id="memberId" th:field="*{memberId}"><option value="">-- Chọn độc giả --</option><option th:each="member : ${members}" th:value="${member.id}" th:text="${member.fullName + ' (' + member.email + ')'}"></option></select><div class="field-error" th:errors="*{memberId}"></div></div>
+            <div><label for="dueDate">Hạn trả</label><input id="dueDate" type="date" th:field="*{dueDate}"><div class="field-error" th:errors="*{dueDate}"></div></div>
+        </div>
+        <h2>Sách mượn (tối đa 5 cuốn đang chưa trả)</h2>
+        <div th:each="line, stat : *{lines}" class="form-grid">
+            <div><label th:for="${'book-' + stat.index}" th:text="${'Sách ' + (stat.index + 1)}"></label>
+                <select th:id="${'book-' + stat.index}" th:field="*{lines[__${stat.index}__].bookId}"><option value="">-- Chọn sách --</option>
+                    <option th:each="book : ${books}" th:value="${book.id}" th:text="${book.title + ' — còn ' + book.availableQuantity}"></option></select></div>
+            <div><label th:for="${'quantity-' + stat.index}">Số lượng</label><input th:id="${'quantity-' + stat.index}" type="number" min="0" max="5" th:field="*{lines[__${stat.index}__].quantity}"></div>
+        </div>
+        <p class="muted">Không được chọn trùng một đầu sách. Nếu có một dòng không đủ tồn kho, toàn bộ phiếu sẽ không được tạo.</p>
+        <p class="actions"><button class="btn" type="submit">Tạo phiếu</button><a class="btn light" th:href="@{/borrowings}">Hủy</a></p>
+    </form>
+</main></body>
+</html>

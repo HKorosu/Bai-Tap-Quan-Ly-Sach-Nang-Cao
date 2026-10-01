@@ -1,0 +1,14 @@
+:root{font-family:Arial,Helvetica,sans-serif;color:#203047;background:#f4f7fb;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}.container{width:min(1100px,94%);margin:0 auto}
+.topbar{background:#16324f;color:#fff}.nav{display:flex;align-items:center;justify-content:space-between;min-height:64px;gap:20px}
+.brand{font-size:21px;font-weight:700;color:white;text-decoration:none}.nav nav{display:flex;gap:18px;flex-wrap:wrap}.nav nav a{color:#eaf2fa;text-decoration:none}
+main{padding:28px 0 56px}h1{margin:0 0 18px;font-size:28px}h2{font-size:20px}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:16px 0;flex-wrap:wrap}
+.btn{display:inline-block;border:0;border-radius:6px;background:#1769aa;color:white;padding:10px 15px;text-decoration:none;font:inherit;cursor:pointer}
+.btn.secondary{background:#64748b}.btn.danger{background:#b42318}.btn.light{background:#e9eff6;color:#203047}
+.card{background:white;border:1px solid #dce4ed;border-radius:10px;padding:20px;margin:14px 0;box-shadow:0 2px 8px #1d35570b}
+.table-wrap{overflow-x:auto;background:white;border:1px solid #dce4ed;border-radius:10px}table{width:100%;border-collapse:collapse;min-width:650px}th,td{padding:12px 14px;text-align:left;border-bottom:1px solid #e8edf2}th{background:#edf3f8;color:#40546a}
+label{display:block;font-weight:600;margin:12px 0 6px}input,select,textarea{width:100%;padding:10px;border:1px solid #bbc8d5;border-radius:6px;font:inherit;background:white}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.field-error,.error-text{color:#b42318;font-size:14px}.alert{padding:12px 16px;border-radius:8px;margin-top:16px}.success{background:#e5f6eb;color:#17643a}.badge{display:inline-block;border-radius:20px;padding:5px 9px;background:#e8eff6;font-size:13px}
+.policy-grid{align-items:start}.policy-grid label{min-height:44px;display:flex;align-items:flex-end;gap:4px}.policy-grid label .muted{font-weight:400}
+.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.muted{color:#607387}.money{font-weight:700}.inline{display:inline}
+@media(max-width:650px){.nav{align-items:flex-start;padding:14px 0;flex-direction:column}.nav nav{gap:10px}.toolbar{align-items:flex-start}}

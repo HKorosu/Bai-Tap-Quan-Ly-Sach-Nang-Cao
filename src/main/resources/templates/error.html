@@ -1,0 +1,6 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Không thể thực hiện | Thư viện</title><link rel="stylesheet" th:href="@{/style.css}"></head>
+<body><header th:replace="~{fragments :: nav}"></header>
+<main class="container"><section class="card"><h1>Không thể thực hiện yêu cầu</h1><p class="error-text" th:text="${message}">Đã xảy ra lỗi.</p><p>Không có thay đổi nào được ghi nhận cho thao tác thất bại.</p><a class="btn" th:href="@{/borrowings}">Quay về danh sách phiếu</a></section></main></body>
+</html>
